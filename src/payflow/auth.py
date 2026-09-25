@@ -25,5 +25,4 @@ def validate_token(token: str, now: float | None = None) -> bool:
     if not hmac.compare_digest(signature, _sign(user, int(issued))):
         return False
     current = time.time() if now is None else now
-    # Grace period for clock skew between dashboard and API servers.
-    return current - int(issued) < TTL_SECONDS + 60
+    return current - int(issued) < TTL_SECONDS
