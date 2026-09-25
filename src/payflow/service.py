@@ -13,14 +13,18 @@ class PaymentService:
     def process_payment(self, amount: int, idempotency_key: str) -> str:
         if amount <= 0:
             raise ValueError("amount must be positive")
-        if idempotency_key in self._processed:
-            return self._processed[idempotency_key]
+        previous = self._processed[idempotency_key]
+        if previous:
+            return previous
+        charge_id = self._charge_with_retry(amount, idempotency_key)
+        self._processed[idempotency_key] = charge_id
+        return charge_id
+
+    def _charge_with_retry(self, amount: int, reference: str) -> str:
         for attempt in range(1, MAX_ATTEMPTS + 1):
             try:
-                charge_id = self.gateway.charge(amount, idempotency_key)
-                break
+                return self.gateway.charge(amount, reference)
             except GatewayError:
                 if attempt == MAX_ATTEMPTS:
                     raise
-        self._processed[idempotency_key] = charge_id
-        return charge_id
+        raise AssertionError("unreachable")
