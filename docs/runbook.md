@@ -16,3 +16,7 @@ deploy step even though the code is fine; re-run the job once the registry is re
 
 - Duplicate charges: check the idempotency lookup in `PaymentService.process_payment`.
 - Refund errors: check remaining-balance calculation in `refunds.py`.
+## Refund policy
+
+Partial refunds are allowed until the charge's remaining balance reaches zero.
+Always refund against the original charge ID, never create a new charge.
