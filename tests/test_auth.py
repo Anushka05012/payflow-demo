@@ -14,3 +14,6 @@ def test_tampered_token_is_rejected():
 def test_token_is_invalid_long_after_expiry():
     token = issue_token("ops", now=1_000)
     assert not validate_token(token, now=1_000 + TTL_SECONDS + 3_600)
+def test_token_is_rejected_just_after_expiry():
+    token = issue_token("ops", now=1_000)
+    assert not validate_token(token, now=1_000 + TTL_SECONDS + 30)
