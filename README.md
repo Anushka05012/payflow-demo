@@ -18,6 +18,8 @@ failure analysis, risk scoring and repository Q&A can be shown on real GitHub da
 - `scripts/deploy.py` – deployment step used by CI
 - `docs/` – runbook and architecture notes
 
+Operational procedures live in [docs/runbook.md](docs/runbook.md).
+
 ## Development
 
 ```bash
