@@ -13,7 +13,7 @@ class PaymentService:
     def process_payment(self, amount: int, idempotency_key: str) -> str:
         if amount <= 0:
             raise ValueError("amount must be positive")
-        previous = self._processed[idempotency_key]
+        previous = self._processed.get(idempotency_key)
         if previous:
             return previous
         charge_id = self._charge_with_retry(amount, idempotency_key)
