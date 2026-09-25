@@ -1,6 +1,8 @@
 """Charges customers exactly once per idempotency key."""
 
-from .gateway import FakeGateway
+from .gateway import FakeGateway, GatewayError
+
+MAX_ATTEMPTS = 3
 
 
 class PaymentService:
@@ -13,6 +15,12 @@ class PaymentService:
             raise ValueError("amount must be positive")
         if idempotency_key in self._processed:
             return self._processed[idempotency_key]
-        charge_id = self.gateway.charge(amount, idempotency_key)
+        for attempt in range(1, MAX_ATTEMPTS + 1):
+            try:
+                charge_id = self.gateway.charge(amount, idempotency_key)
+                break
+            except GatewayError:
+                if attempt == MAX_ATTEMPTS:
+                    raise
         self._processed[idempotency_key] = charge_id
         return charge_id
