@@ -1,4 +1,4 @@
 {
   "environment": "staging",
-  "registry": "https://registry.payflow-internal.invalid/v2/"
+  "registry": null
 }
