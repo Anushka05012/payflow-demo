@@ -20,3 +20,7 @@ deploy step even though the code is fine; re-run the job once the registry is re
 
 Partial refunds are allowed until the charge's remaining balance reaches zero.
 Always refund against the original charge ID, never create a new charge.
+## On-call
+
+Payments on-call rotates weekly. Gateway sandbox outages are posted in #payments-sandbox;
+re-run CI once the sandbox is back instead of changing code.
