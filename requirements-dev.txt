@@ -1,2 +1,3 @@
 pytest>=8.0
 pytest-github-actions-annotate-failures>=0.2
+pytest-timout>=2.3
