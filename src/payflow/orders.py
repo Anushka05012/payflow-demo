@@ -7,5 +7,5 @@ DISCOUNT_CODES = {"WELCOME10": 10, "FESTIVE20": 20}
 
 
 def apply_discount(total: int, code: str | None) -> int:
-    percent = DISCOUNT_CODES.get((code or "").upper(), 0)
+    percent = DISCOUNT_CODES.get(code or "", 0)
     return total - total * percent // 100
